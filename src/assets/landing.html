@@ -53,6 +53,9 @@
                         'shimmer': 'shimmer 2.5s linear infinite',
                         'rotate-slow': 'rotateSlow 20s linear infinite',
                         'particle': 'particle 6s linear infinite',
+                        'orbit': 'orbit 8s linear infinite',
+                        'pulse-dot': 'pulseDot 3s ease-in-out infinite',
+                        'slide-up-fade': 'slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
                     keyframes: {
                         float: {
@@ -90,6 +93,18 @@
                             '10%': { opacity: 1 },
                             '90%': { opacity: 1 },
                             '100%': { transform: 'translateY(-800px) scale(0)', opacity: 0 },
+                        },
+                        orbit: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' },
+                        },
+                        pulseDot: {
+                            '0%, 100%': { opacity: '1', filter: 'drop-shadow(0 0 6px rgba(56,189,248,0.8))' },
+                            '50%': { opacity: '0.6', filter: 'drop-shadow(0 0 2px rgba(56,189,248,0.3))' },
+                        },
+                        slideUpFade: {
+                            '0%': { opacity: '0', transform: 'translateY(28px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -100,6 +115,35 @@
         /* ─── INITIAL LOAD: hide everything until orchestrated reveal ─── */
         .hero-init { opacity: 0; }
         .nav-init { transform: translateY(-100%); }
+
+        /* ─── Logo cascade entrance ─── */
+        .cascade-init {
+            opacity: 0;
+            transform: translateY(28px);
+        }
+
+        /* ─── Logo-specific element styles ─── */
+        .logo-i-dot {
+            width: 10px;
+            height: 10px;
+            background: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(56,189,248,0.8), 0 0 30px rgba(56,189,248,0.3);
+        }
+        .logo-divider {
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56,189,248,0.8), 0 0 30px rgba(56,189,248,0.3);
+        }
+        .logo-orbit-container {
+            animation: orbit 8s linear infinite;
+            transform-origin: center center;
+        }
+        .logo-swoosh {
+            position: absolute;
+            bottom: -2px;
+            left: -10px;
+            pointer-events: none;
+        }
 
         /* ─── Technical Grid Background ─── */
         body {
@@ -370,7 +414,7 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--                       HERO SECTION                        -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="relative min-h-screen flex items-center pt-[72px] overflow-hidden" id="hero-section">
+    <section class="relative min-h-screen flex items-center justify-center pt-[72px] overflow-hidden" id="hero-section">
 
         <!-- Ambient glow orbs (zero-gravity float) -->
         <div class="absolute top-20 left-10 w-[500px] h-[500px] bg-sky-500/[0.07] rounded-full blur-[120px] pointer-events-none orb-float" data-speed="0.6"></div>
@@ -387,195 +431,226 @@
             <div class="particle animate-particle" style="left:92%;bottom:0;animation-delay:4s;animation-duration:7s"></div>
         </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <!-- ── Centered Vertical Stack ── -->
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center text-center">
 
-                <!-- Left Content -->
-                <div class="text-center lg:text-left">
-                    <!-- Pre-heading Tag -->
-                    <div class="hero-init inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/5 mb-8"
-                        id="hero-tag">
-                        <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                        <span class="font-heading text-sky-400 text-xs tracking-[0.2em] uppercase font-medium">&lt; CODE
-                            • INNOVATE • IMPACT /&gt;</span>
+            <!-- ╔═══════════════════════════════════════════╗ -->
+            <!-- ║      CUSTOM CODE-BASED LOGO: AiTHON 2.0  ║ -->
+            <!-- ╚═══════════════════════════════════════════╝ -->
+            <div class="cascade-init mb-10 select-none" id="hero-logo">
+                <div class="flex items-baseline justify-center gap-0" style="font-family:'Space Grotesk',sans-serif;">
+
+                    <!-- ── "A" with sweeping sky-blue swoosh ── -->
+                    <span class="relative inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none" style="letter-spacing:-0.02em;">
+                        A
+                        <!-- SVG swoosh overlay across bottom-left of A -->
+                        <svg class="logo-swoosh" width="110" height="45" viewBox="0 0 110 45" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            style="width:110%;height:auto;bottom:-4px;left:-12%;">
+                            <defs>
+                                <linearGradient id="swooshGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+                                    <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.9"/>
+                                    <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.85"/>
+                                    <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M0 38 C10 28, 20 12, 40 10 C60 8, 75 18, 90 26 C98 30, 105 35, 110 40"
+                                  stroke="url(#swooshGrad)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                            <path d="M0 42 C15 32, 25 18, 45 15 C62 12, 78 22, 95 30 C102 34, 108 38, 110 42"
+                                  stroke="url(#swooshGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+                        </svg>
+                    </span>
+
+                    <!-- ── "i" with glowing dot ── -->
+                    <span class="relative inline-block text-white text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold leading-none" style="margin-left:-0.08em;margin-right:0.02em;">
+                        <!-- Glowing dot replacing the tittle -->
+                        <span class="absolute animate-pulse-dot" style="top:-0.05em;left:50%;transform:translateX(-50%);">
+                            <span class="block logo-i-dot" style="width:12px;height:12px;"></span>
+                        </span>
+                        <!-- The i body (dotless) -->
+                        <span style="visibility:hidden;">i</span>
+                        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 text-white" style="line-height:inherit;">
+                            <svg width="12" height="48" viewBox="0 0 12 60" class="sm:hidden">
+                                <rect x="2" y="0" width="8" height="42" rx="2" fill="white"/>
+                            </svg>
+                        </span>
+                        <!-- Visible lowercase i without dot (rendered as character) -->
+                        <span class="absolute inset-0 flex items-end justify-center" aria-hidden="true"
+                              style="font-size:inherit;line-height:inherit;color:transparent;-webkit-text-stroke:0px;">
+                        </span>
+                        <span style="color:white;visibility:visible;position:relative;z-index:1;">ı</span>
+                    </span>
+
+                    <!-- ── "TH" ── -->
+                    <span class="inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none tracking-tight">TH</span>
+
+                    <!-- ── "O" with 3D ribbon + orbiting satellites ── -->
+                    <span class="relative inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none">
+                        O
+                        <!-- Inner 3D-like blue ribbon shadow -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="ribbonGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+                                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.9"/>
+                                    <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.7"/>
+                                    <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.5"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 3D ribbon crescent inside the O -->
+                            <path d="M35 30 C30 45, 28 70, 38 90 C42 96, 48 98, 50 95 C42 80, 40 55, 45 35 C46 32, 40 28, 35 30Z"
+                                  fill="url(#ribbonGrad)" opacity="0.6"/>
+                            <path d="M60 28 C65 42, 68 68, 58 88 C55 93, 50 95, 48 92 C56 78, 58 52, 54 33 C53 30, 57 26, 60 28Z"
+                                  fill="url(#ribbonGrad)" opacity="0.35"/>
+                        </svg>
+
+                        <!-- Orbiting satellites ring -->
+                        <span class="absolute pointer-events-none" style="top:50%;left:50%;transform:translate(-50%,-50%);width:140%;height:140%;">
+                            <svg viewBox="0 0 140 140" class="w-full h-full logo-orbit-container" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Orbit ring path -->
+                                <circle cx="70" cy="70" r="62" fill="none" stroke="rgba(56,189,248,0.2)" stroke-width="0.8" stroke-dasharray="4 6"/>
+                                <!-- Satellite dot 1 (top) -->
+                                <circle cx="70" cy="8" r="4.5" fill="#38bdf8">
+                                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <!-- Satellite dot 2 (bottom-right offset) -->
+                                <circle cx="125" cy="85" r="3" fill="#0ea5e9">
+                                    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.5s" repeatCount="indefinite"/>
+                                </circle>
+                                <!-- Small accent dot -->
+                                <circle cx="20" cy="110" r="2" fill="#7dd3fc" opacity="0.6">
+                                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+                                </circle>
+                            </svg>
+                        </span>
+                    </span>
+
+                    <!-- ── "N" ── -->
+                    <span class="inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none tracking-tight">N</span>
+
+                    <!-- ── Glowing Divider "|" ── -->
+                    <span class="inline-block logo-divider animate-pulse-dot font-light text-[3.5rem] sm:text-[5rem] md:text-[6rem] leading-none mx-3 sm:mx-4 md:mx-5 select-none" aria-hidden="true"
+                          style="opacity:0.9;">|</span>
+
+                    <!-- ── "2.0" ── -->
+                    <span class="inline-block font-bold text-white text-[4rem] sm:text-[5.5rem] md:text-[7rem] leading-none tracking-tight">2.0</span>
+
+                </div>
+            </div>
+
+            <!-- ── Pre-heading Tag ── -->
+            <div class="cascade-init inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/5 mb-6"
+                id="hero-tag">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                <span class="font-heading text-sky-400 text-xs tracking-[0.2em] uppercase font-medium">&lt; CODE
+                    • INNOVATE • IMPACT /&gt;</span>
+            </div>
+
+            <!-- ── Dept line ── -->
+            <p class="cascade-init font-heading text-sky-400/70 font-medium tracking-[0.15em] mb-5 uppercase text-xs md:text-sm"
+                id="hero-dept">
+                Department of AI & DS Presents
+            </p>
+
+            <!-- ── Main Headline ── -->
+            <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.08] tracking-tight"
+                id="hero-headline">
+                <span class="cascade-init block text-white" id="decode-line1">BUILD THE FUTURE</span>
+                <span class="cascade-init block gradient-flow-text neon-text" id="decode-line2">WITH INTELLIGENCE</span>
+            </h1>
+
+            <!-- ── Subtext ── -->
+            <p class="cascade-init text-gray-400 max-w-2xl mx-auto mb-10 text-base md:text-lg leading-relaxed"
+                id="hero-subtext">
+                AI-THON 2.0 is your platform to innovate, collaborate and build AI-powered solutions for
+                real-world challenges. A 48-hour national level hackathon at Amrutvahini College of Engineering,
+                Sangamner.
+            </p>
+
+            <!-- ── CTA Buttons ── -->
+            <div class="cascade-init flex flex-col sm:flex-row gap-4 justify-center mb-14"
+                id="hero-ctas">
+                <!-- Magnetic Register Button -->
+                <button
+                    class="magnetic-btn group relative px-8 py-4 font-heading font-bold text-black bg-sky-400 rounded-lg overflow-hidden hover:scale-[1.03] transition-colors duration-300 shadow-[0_0_25px_rgba(56,189,248,0.4)]"
+                    id="register-btn">
+                    <div class="btn-glow rounded-lg"></div>
+                    <span
+                        class="relative z-10 flex items-center justify-center gap-2 uppercase tracking-wider text-sm">
+                        Register Team
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </span>
+                    <div
+                        class="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 z-[1]">
                     </div>
+                </button>
 
-                    <!-- Dept line -->
-                    <p class="hero-init font-heading text-sky-400/70 font-medium tracking-[0.15em] mb-5 uppercase text-xs md:text-sm"
-                        id="hero-dept">
-                        Department of AI & DS Presents
-                    </p>
-
-                    <!-- Main Headline (Cyber-Decode target) -->
-                    <h1 class="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold mb-6 leading-[1.05] tracking-tight"
-                        id="hero-headline">
-                        <span class="hero-init block" id="decode-line1">BUILD THE FUTURE</span>
-                        <span class="hero-init block gradient-flow-text neon-text" id="decode-line2">WITH INTELLIGENCE</span>
-                    </h1>
-
-                    <!-- Subtext (word-by-word reveal) -->
-                    <p class="hero-init text-gray-400 max-w-lg mx-auto lg:mx-0 mb-10 text-base md:text-lg leading-relaxed"
-                        id="hero-subtext">
-                        AI-THON 2.0 is your platform to innovate, collaborate and build AI-powered solutions for
-                        real-world challenges. A 48-hour national level hackathon at Amrutvahini College of Engineering,
-                        Sangamner.
-                    </p>
-
-                    <!-- CTAs -->
-                    <div class="hero-init flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-                        id="hero-ctas">
-                        <!-- Magnetic Register Button -->
-                        <button
-                            class="magnetic-btn group relative px-8 py-4 font-heading font-bold text-black bg-sky-400 rounded-lg overflow-hidden hover:scale-[1.03] transition-colors duration-300 shadow-[0_0_25px_rgba(56,189,248,0.4)]"
-                            id="register-btn">
-                            <div class="btn-glow rounded-lg"></div>
-                            <span
-                                class="relative z-10 flex items-center justify-center gap-2 uppercase tracking-wider text-sm">
-                                Register Team
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </span>
-                            <div
-                                class="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12 z-[1]">
-                            </div>
-                        </button>
-
-                        <button
-                            class="group px-8 py-4 font-heading font-semibold text-white border border-white/20 rounded-lg hover:border-sky-400/50 hover:bg-sky-500/5 transition-all duration-300 flex items-center justify-center gap-3"
-                            id="explore-btn">
-                            <span class="uppercase tracking-wider text-sm">Explore Problems</span>
-                            <div
-                                class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center group-hover:border-sky-400 group-hover:bg-sky-400/10 transition-all duration-300">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                            </div>
-                        </button>
+                <button
+                    class="group px-8 py-4 font-heading font-semibold text-white border border-white/20 rounded-lg hover:border-sky-400/50 hover:bg-sky-500/5 transition-all duration-300 flex items-center justify-center gap-3"
+                    id="explore-btn">
+                    <span class="uppercase tracking-wider text-sm">Explore Problems</span>
+                    <div
+                        class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center group-hover:border-sky-400 group-hover:bg-sky-400/10 transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
                     </div>
+                </button>
+            </div>
 
-                    <!-- Event Meta (word-reveal) -->
-                    <div class="hero-init flex flex-wrap gap-6 mt-10 justify-center lg:justify-start text-gray-500 text-sm"
-                        id="hero-meta">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-sky-400/60" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span>20 – 22 Dec, 2025</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-sky-400/60" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <span>Sangamner, Maharashtra</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-sky-400/60" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z">
-                                </path>
-                            </svg>
-                            <span>Open for All</span>
-                        </div>
+            <!-- ── Stats + Meta Grid ── -->
+            <div class="cascade-init w-full max-w-3xl" id="hero-info-grid">
+                <!-- Stats Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8">
+                    <div class="glass-card rounded-xl px-4 py-5 flex flex-col items-center">
+                        <span class="font-heading text-2xl md:text-3xl font-bold text-white counter" data-target="1200">0</span>
+                        <span class="text-gray-500 text-xs uppercase tracking-wider mt-1 font-heading">Participants</span>
+                    </div>
+                    <div class="glass-card rounded-xl px-4 py-5 flex flex-col items-center">
+                        <span class="font-heading text-2xl md:text-3xl font-bold text-white counter" data-target="300">0</span>
+                        <span class="text-gray-500 text-xs uppercase tracking-wider mt-1 font-heading">Projects</span>
+                    </div>
+                    <div class="glass-card rounded-xl px-4 py-5 flex flex-col items-center">
+                        <span class="font-heading text-2xl md:text-3xl font-bold text-white counter" data-target="50">0</span>
+                        <span class="text-gray-500 text-xs uppercase tracking-wider mt-1 font-heading">Mentors</span>
+                    </div>
+                    <div class="glass-card rounded-xl px-4 py-5 flex flex-col items-center">
+                        <span class="font-heading text-2xl md:text-3xl font-bold text-sky-400">1</span>
+                        <span class="text-gray-500 text-xs uppercase tracking-wider mt-1 font-heading">Mission</span>
                     </div>
                 </div>
 
-                <!-- Right: AI Brain Visual -->
-                <div class="hero-init relative flex items-center justify-center" id="hero-brain">
-                    <!-- Rotating rings -->
-                    <div class="absolute w-[320px] h-[320px] md:w-[420px] md:h-[420px] rounded-full border border-sky-500/10 animate-rotate-slow"></div>
-                    <div class="absolute w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full border border-sky-400/5 animate-rotate-slow"
-                        style="animation-direction:reverse;animation-duration:15s;"></div>
-
-                    <!-- AI Brain SVG -->
-                    <div class="ai-brain-container w-[250px] h-[250px] md:w-[340px] md:h-[340px] relative animate-float-slow">
-                        <svg viewBox="0 0 400 400" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <radialGradient id="brainGlow" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="rgba(56,189,248,0.3)" />
-                                    <stop offset="100%" stop-color="transparent" />
-                                </radialGradient>
-                                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="rgba(56,189,248,0.8)" />
-                                    <stop offset="100%" stop-color="rgba(6,182,212,0.3)" />
-                                </linearGradient>
-                            </defs>
-                            <circle cx="200" cy="200" r="180" fill="url(#brainGlow)" />
-                            <path
-                                d="M200 40 C120 40 70 100 70 170 C70 210 85 240 100 260 C110 275 115 290 115 310 L115 340 C115 350 125 360 140 360 L260 360 C275 360 285 350 285 340 L285 310 C285 290 290 275 300 260 C315 240 330 210 330 170 C330 100 280 40 200 40Z"
-                                fill="none" stroke="url(#lineGrad)" stroke-width="1.5" opacity="0.6" />
-                            <!-- Neural nodes -->
-                            <circle cx="160" cy="120" r="5" fill="#38bdf8" opacity="0.9"><animate attributeName="opacity" values="0.9;0.4;0.9" dur="2s" repeatCount="indefinite"/></circle>
-                            <circle cx="240" cy="120" r="5" fill="#38bdf8" opacity="0.9"><animate attributeName="opacity" values="0.9;0.4;0.9" dur="2.5s" repeatCount="indefinite"/></circle>
-                            <circle cx="200" cy="90" r="4" fill="#22d3ee" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/></circle>
-                            <circle cx="140" cy="170" r="6" fill="#38bdf8" opacity="0.9"><animate attributeName="opacity" values="0.9;0.5;0.9" dur="2.2s" repeatCount="indefinite"/></circle>
-                            <circle cx="260" cy="170" r="6" fill="#38bdf8" opacity="0.9"><animate attributeName="opacity" values="0.9;0.5;0.9" dur="1.8s" repeatCount="indefinite"/></circle>
-                            <circle cx="200" cy="160" r="7" fill="#0ea5e9" opacity="1"><animate attributeName="opacity" values="1;0.6;1" dur="1.5s" repeatCount="indefinite"/></circle>
-                            <circle cx="175" cy="210" r="4" fill="#67e8f9" opacity="0.7"><animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.8s" repeatCount="indefinite"/></circle>
-                            <circle cx="225" cy="210" r="4" fill="#67e8f9" opacity="0.7"><animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.4s" repeatCount="indefinite"/></circle>
-                            <circle cx="200" cy="240" r="5" fill="#38bdf8" opacity="0.8"><animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite"/></circle>
-                            <circle cx="160" cy="260" r="3" fill="#22d3ee" opacity="0.6"><animate attributeName="opacity" values="0.6;0.2;0.6" dur="3.5s" repeatCount="indefinite"/></circle>
-                            <circle cx="240" cy="260" r="3" fill="#22d3ee" opacity="0.6"><animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/></circle>
-                            <!-- Neural connections -->
-                            <line x1="160" y1="120" x2="200" y2="90" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="240" y1="120" x2="200" y2="90" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="160" y1="120" x2="140" y2="170" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="240" y1="120" x2="260" y2="170" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="160" y1="120" x2="200" y2="160" stroke="#38bdf8" stroke-width="0.8" opacity="0.4"/>
-                            <line x1="240" y1="120" x2="200" y2="160" stroke="#38bdf8" stroke-width="0.8" opacity="0.4"/>
-                            <line x1="140" y1="170" x2="200" y2="160" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="260" y1="170" x2="200" y2="160" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="140" y1="170" x2="175" y2="210" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="260" y1="170" x2="225" y2="210" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="200" y1="160" x2="175" y2="210" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="200" y1="160" x2="225" y2="210" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="175" y1="210" x2="200" y2="240" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="225" y1="210" x2="200" y2="240" stroke="#38bdf8" stroke-width="0.8" opacity="0.3"/>
-                            <line x1="200" y1="240" x2="160" y2="260" stroke="#38bdf8" stroke-width="0.8" opacity="0.2"/>
-                            <line x1="200" y1="240" x2="240" y2="260" stroke="#38bdf8" stroke-width="0.8" opacity="0.2"/>
-                            <!-- Center AI label -->
-                            <rect x="172" y="148" width="56" height="28" rx="4" fill="rgba(56,189,248,0.15)" stroke="rgba(56,189,248,0.4)" stroke-width="1"/>
-                            <text x="200" y="168" text-anchor="middle" fill="#38bdf8" font-family="Space Grotesk" font-weight="700" font-size="16">AI</text>
+                <!-- Meta Row (Date, Location, Open) -->
+                <div class="flex flex-wrap gap-6 justify-center text-gray-500 text-sm" id="hero-meta">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-sky-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
+                        <span>20 – 22 Dec, 2025</span>
                     </div>
-
-                    <!-- Stats panel (floating) -->
-                    <div class="glass-bloom absolute top-4 -right-2 md:top-8 md:right-0 glass-card rounded-lg p-4 w-44 animate-float-delayed corner-accent"
-                        id="hero-stats-panel">
-                        <p class="font-heading text-[0.6rem] text-sky-400/70 tracking-[0.2em] uppercase mb-3">// Hackathon Stats</p>
-                        <div class="space-y-2.5">
-                            <div>
-                                <p class="font-heading text-xl font-bold text-white counter" data-target="1200">0</p>
-                                <p class="text-gray-500 text-[0.65rem]">Participants</p>
-                            </div>
-                            <div>
-                                <p class="font-heading text-xl font-bold text-white counter" data-target="300">0</p>
-                                <p class="text-gray-500 text-[0.65rem]">Projects</p>
-                            </div>
-                            <div>
-                                <p class="font-heading text-xl font-bold text-white counter" data-target="50">0</p>
-                                <p class="text-gray-500 text-[0.65rem]">Mentors</p>
-                            </div>
-                            <div>
-                                <p class="font-heading text-xl font-bold text-sky-400">1</p>
-                                <p class="text-gray-500 text-[0.65rem]">Mission</p>
-                            </div>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-sky-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Sangamner, Maharashtra</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-sky-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        <span>Open for All</span>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -1077,6 +1152,7 @@
 
         // ════════════════════════════════════════════════════
         //   3. THE VIDEO EDIT SEQUENCE (on-load orchestration)
+        //      Centered cinematic cascade: logo → headline → subtext → stats
         // ════════════════════════════════════════════════════
         const masterTimeline = gsap.timeline({ delay: 0.2 });
 
@@ -1092,49 +1168,72 @@
                 }
             });
 
-            // Phase 2: Hero tag fades in
+            // Phase 2: Logo — fade in + subtle scale up (first element to appear)
+            masterTimeline.fromTo('#hero-logo', {
+                opacity: 0,
+                scale: 0.92,
+                y: 20
+            }, {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power2.out'
+            }, '-=0.1');
+
+            // Phase 3: Pre-heading tag + Dept line (+400ms after logo starts)
             masterTimeline.to('#hero-tag', {
                 opacity: 1,
                 y: 0,
                 duration: 0.5,
                 ease: 'power2.out'
-            }, '-=0.1');
+            }, '-=0.4');
 
-            // Phase 3: Dept line
             masterTimeline.to('#hero-dept', {
                 opacity: 1,
                 y: 0,
                 duration: 0.4,
                 ease: 'power2.out'
-            }, '-=0.2');
+            }, '-=0.3');
 
-            // Phase 4: Cyber-decode headline (line 1)
+            // Phase 4: Cyber-decode headline (line 1) — slides up + decodes
             const line1El = document.getElementById('decode-line1');
             const line1Text = line1El.textContent.trim();
             line1El.textContent = '';
-            masterTimeline.to(line1El, {
+            masterTimeline.fromTo(line1El, {
+                opacity: 0,
+                y: 18
+            }, {
                 opacity: 1,
-                duration: 0.01,
+                y: 0,
+                duration: 0.4,
+                ease: 'power2.out',
                 onComplete: () => cyberDecode(line1El, line1Text, { duration: 1400 })
-            }, '-=0.1');
+            }, '+=0.1');
 
             // Phase 5: Cyber-decode headline (line 2) — with gradient flow
             const line2El = document.getElementById('decode-line2');
             const line2Text = line2El.textContent.trim();
             line2El.textContent = '';
-            masterTimeline.to(line2El, {
+            masterTimeline.fromTo(line2El, {
+                opacity: 0,
+                y: 18
+            }, {
                 opacity: 1,
-                duration: 0.01,
+                y: 0,
+                duration: 0.4,
+                ease: 'power2.out',
                 onComplete: () => cyberDecode(line2El, line2Text, { duration: 1600 })
-            }, '-=1.0');
+            }, '-=0.8');
 
-            // Phase 6: Subtext — word-by-word
+            // Phase 6: Subtext — word-by-word (+400ms after headline)
             const subtextEl = document.getElementById('hero-subtext');
             const subtextWords = wrapWords(subtextEl);
             masterTimeline.to(subtextEl, {
                 opacity: 1,
+                y: 0,
                 duration: 0.01
-            }, '+=0.3');
+            }, '+=0.2');
             masterTimeline.to(subtextWords, {
                 opacity: 1,
                 y: 0,
@@ -1144,7 +1243,10 @@
             }, '-=0.01');
 
             // Phase 7: CTAs bloom in
-            masterTimeline.to('#hero-ctas', {
+            masterTimeline.fromTo('#hero-ctas', {
+                opacity: 0,
+                y: 20
+            }, {
                 opacity: 1,
                 y: 0,
                 duration: 0.6,
@@ -1160,40 +1262,31 @@
                         ease: 'power2.out'
                     });
                 }
-            }, '-=0.1');
+            }, '-=0.15');
 
-            // Phase 8: Event meta
+            // Phase 8: Stats + Meta grid — fade in + counter animation (+400ms)
+            masterTimeline.fromTo('#hero-info-grid', {
+                opacity: 0,
+                y: 24
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                ease: 'power2.out',
+                onComplete: () => animateCounters()
+            }, '+=0.1');
+
+            // Phase 9: Meta row
             masterTimeline.to('#hero-meta', {
                 opacity: 1,
                 y: 0,
                 duration: 0.5,
                 ease: 'power2.out'
-            }, '-=0.3');
-
-            // Phase 9: AI Brain visual — scale + fade
-            masterTimeline.fromTo('#hero-brain', {
-                opacity: 0,
-                scale: 0.85,
-            }, {
-                opacity: 1,
-                scale: 1,
-                duration: 1,
-                ease: 'power2.out'
-            }, '-=1.2');
-
-            // Phase 10: Stats panel — glassmorphism bloom
-            masterTimeline.to('#hero-stats-panel', {
-                opacity: 1,
-                backdropFilter: 'blur(12px)',
-                webkitBackdropFilter: 'blur(12px)',
-                duration: 0.8,
-                ease: 'power2.out',
-                onComplete: () => animateCounters()
-            }, '-=0.5');
+            }, '-=0.4');
 
         } else {
             // Reduced motion: just reveal everything
-            document.querySelectorAll('.hero-init, .nav-init, .glass-bloom').forEach(el => {
+            document.querySelectorAll('.hero-init, .cascade-init, .nav-init, .glass-bloom').forEach(el => {
                 el.style.opacity = 1;
                 el.style.transform = 'none';
                 el.style.backdropFilter = 'blur(12px)';
