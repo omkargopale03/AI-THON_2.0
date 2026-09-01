@@ -326,6 +326,110 @@
         /* ─── Word reveal helper ─── */
         .word-reveal { display: inline-block; opacity: 0; transform: translateY(18px); }
 
+        /* ─── AiTHON 2.0 Custom Logo Styles ─── */
+        @keyframes logoEntrance {
+            0% { opacity: 0; transform: scale(0.95); filter: blur(4px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+        @keyframes orbitSpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes orbitSpin2 {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        @keyframes dotPulse {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(56,189,248,0.9)); r: 5; }
+            50% { filter: drop-shadow(0 0 12px rgba(56,189,248,1)); r: 6; }
+        }
+        @keyframes dotPulse2 {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(14,165,233,0.8)); r: 3.5; }
+            50% { filter: drop-shadow(0 0 10px rgba(14,165,233,1)); r: 4.5; }
+        }
+        @keyframes iDotGlow {
+            0%, 100% { box-shadow: 0 0 12px 3px rgba(56,189,248,0.7), 0 0 30px 6px rgba(56,189,248,0.3); }
+            50% { box-shadow: 0 0 18px 5px rgba(56,189,248,0.9), 0 0 40px 10px rgba(56,189,248,0.4); }
+        }
+        @keyframes dividerGlow {
+            0%, 100% { text-shadow: 0 0 8px rgba(56,189,248,0.8), 0 0 25px rgba(56,189,248,0.4); opacity: 0.85; }
+            50% { text-shadow: 0 0 14px rgba(56,189,248,1), 0 0 35px rgba(56,189,248,0.6); opacity: 1; }
+        }
+        @keyframes zeroDotPulse {
+            0%, 100% { box-shadow: 0 0 4px 1px rgba(56,189,248,0.6), 0 0 12px 3px rgba(56,189,248,0.3); }
+            50% { box-shadow: 0 0 8px 2px rgba(56,189,248,0.9), 0 0 20px 5px rgba(56,189,248,0.5); }
+        }
+
+        #hero-logo {
+            animation: logoEntrance 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .aithon-logo-wrap {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            user-select: none;
+        }
+
+        .logo-letter-A {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-i-sphere {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #7dd3fc 0%, #38bdf8 40%, #0284c7 80%, #0369a1 100%);
+            box-shadow: 0 0 12px 3px rgba(56,189,248,0.7), 0 0 30px 6px rgba(56,189,248,0.3);
+            animation: iDotGlow 3s ease-in-out infinite;
+        }
+        @media (min-width: 640px) { .logo-i-sphere { width: 28px; height: 28px; } }
+        @media (min-width: 768px) { .logo-i-sphere { width: 34px; height: 34px; } }
+
+        .logo-O-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+        }
+        .logo-orbit-ring-1 {
+            width: 160%;
+            height: 160%;
+            animation: orbitSpin 14s linear infinite;
+        }
+        .logo-orbit-ring-2 {
+            width: 140%;
+            height: 140%;
+            animation: orbitSpin2 20s linear infinite;
+        }
+
+        .logo-divider-v2 {
+            color: #38bdf8;
+            animation: dividerGlow 3s ease-in-out infinite;
+        }
+
+        .logo-zero-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #67e8f9, #38bdf8 60%, #0ea5e9);
+            animation: zeroDotPulse 2.5s ease-in-out infinite;
+            position: absolute;
+        }
+
+        .logo-2-0-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
         /* ─── prefers-reduced-motion ─── */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -438,100 +542,173 @@
             <!-- ║      CUSTOM CODE-BASED LOGO: AiTHON 2.0  ║ -->
             <!-- ╚═══════════════════════════════════════════╝ -->
             <div class="cascade-init mb-10 select-none" id="hero-logo">
-                <div class="flex items-baseline justify-center gap-0" style="font-family:'Space Grotesk',sans-serif;">
+                <div class="aithon-logo-wrap">
 
-                    <!-- ── "A" with sweeping sky-blue swoosh ── -->
-                    <span class="relative inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none" style="letter-spacing:-0.02em;">
-                        A
-                        <!-- SVG swoosh overlay across bottom-left of A -->
-                        <svg class="logo-swoosh" width="110" height="45" viewBox="0 0 110 45" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            style="width:110%;height:auto;bottom:-4px;left:-12%;">
+                    <!-- ══════ "A" — stylised with 3D cyan ribbon on left leg ══════ -->
+                    <span class="logo-letter-A font-bold text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none" style="letter-spacing:-0.02em;">
+                        <svg viewBox="0 0 200 220" width="1em" height="1.05em" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible;">
                             <defs>
-                                <linearGradient id="swooshGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+                                <!-- White-to-light-gray gradient for main "A" body -->
+                                <linearGradient id="aBodyGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="60%" stop-color="#e8eaed"/>
+                                    <stop offset="100%" stop-color="#cbd5e1"/>
+                                </linearGradient>
+                                <!-- Cyan ribbon gradient -->
+                                <linearGradient id="aRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0369a1"/>
+                                    <stop offset="35%" stop-color="#0284c7"/>
+                                    <stop offset="65%" stop-color="#38bdf8"/>
+                                    <stop offset="100%" stop-color="#7dd3fc"/>
+                                </linearGradient>
+                                <!-- Secondary ribbon highlight -->
+                                <linearGradient id="aRibbonHighlight" x1="30%" y1="0%" x2="70%" y2="100%">
                                     <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.9"/>
-                                    <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.85"/>
+                                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.6"/>
+                                </linearGradient>
+                                <!-- Swoosh tail gradient -->
+                                <linearGradient id="aSwooshGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+                                    <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0"/>
+                                    <stop offset="20%" stop-color="#0ea5e9" stop-opacity="0.8"/>
+                                    <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.9"/>
                                     <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
                                 </linearGradient>
                             </defs>
-                            <path d="M0 38 C10 28, 20 12, 40 10 C60 8, 75 18, 90 26 C98 30, 105 35, 110 40"
-                                  stroke="url(#swooshGrad)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                            <path d="M0 42 C15 32, 25 18, 45 15 C62 12, 78 22, 95 30 C102 34, 108 38, 110 42"
-                                  stroke="url(#swooshGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+
+                            <!-- White body of the A — right leg + crossbar + apex -->
+                            <path d="M100 8 L165 210 L138 210 L124 165 L76 165 L100 8Z" fill="url(#aBodyGrad)"/>
+                            <!-- A right leg outer edge highlight -->
+                            <path d="M100 8 L165 210 L155 210 L100 28Z" fill="rgba(255,255,255,0.15)"/>
+                            <!-- Crossbar -->
+                            <rect x="72" y="142" width="60" height="14" rx="2" fill="url(#aBodyGrad)" opacity="0.9"/>
+
+                            <!-- Cyan ribbon — left leg of A, sweeping 3D shape -->
+                            <path d="M100 8 L76 165 L62 210 L30 210 Q40 190 58 150 Q75 112 86 80 L100 8Z" fill="url(#aRibbonGrad)"/>
+                            <!-- Ribbon 3D edge (lighter inner face) -->
+                            <path d="M100 8 L86 80 Q80 100 72 130 L62 165 L76 165 L100 8Z" fill="url(#aRibbonHighlight)" opacity="0.5"/>
+
+                            <!-- Sweeping tail extending below-left -->
+                            <path d="M30 210 Q10 215, -15 195 Q-30 180, -20 158 Q-12 142, 5 148 Q18 154, 30 175 Q38 190, 30 210Z"
+                                  fill="url(#aRibbonGrad)" opacity="0.95"/>
+                            <!-- Inner highlight on tail curve -->
+                            <path d="M30 210 Q20 200, 15 185 Q8 168, 5 155 Q0 148, -8 155 Q-15 168, -5 185 Q5 200, 30 210Z"
+                                  fill="url(#aRibbonHighlight)" opacity="0.4"/>
+                            <!-- Thin swoosh streamer extending further -->
+                            <path d="M-20 158 Q-40 145, -50 155 Q-55 162, -45 170 Q-35 175, -20 168"
+                                  fill="url(#aRibbonGrad)" opacity="0.6"/>
                         </svg>
                     </span>
 
-                    <!-- ── "i" with glowing dot ── -->
-                    <span class="relative inline-block text-white text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold leading-none" style="margin-left:-0.08em;margin-right:0.02em;">
-                        <!-- Glowing dot replacing the tittle -->
-                        <span class="absolute animate-pulse-dot" style="top:-0.05em;left:50%;transform:translateX(-50%);">
-                            <span class="block logo-i-dot" style="width:12px;height:12px;"></span>
+                    <!-- ══════ "i" — dotless stem with 3D cyan sphere tittle ══════ -->
+                    <span class="relative inline-block text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold leading-none" style="margin-left:-0.12em; margin-right:0.01em;">
+                        <!-- Glowing 3D sphere (tittle) -->
+                        <span class="absolute" style="top:-0.18em; left:50%; transform:translateX(-50%); z-index:2;">
+                            <span class="block logo-i-sphere"></span>
                         </span>
-                        <!-- The i body (dotless) -->
+                        <!-- Invisible placeholder for spacing -->
                         <span style="visibility:hidden;">i</span>
-                        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 text-white" style="line-height:inherit;">
-                            <svg width="12" height="48" viewBox="0 0 12 60" class="sm:hidden">
-                                <rect x="2" y="0" width="8" height="42" rx="2" fill="white"/>
-                            </svg>
-                        </span>
-                        <!-- Visible lowercase i without dot (rendered as character) -->
-                        <span class="absolute inset-0 flex items-end justify-center" aria-hidden="true"
-                              style="font-size:inherit;line-height:inherit;color:transparent;-webkit-text-stroke:0px;">
-                        </span>
-                        <span style="color:white;visibility:visible;position:relative;z-index:1;">ı</span>
+                        <!-- Visible dotless-i stem -->
+                        <span style="color:white; visibility:visible; position:absolute; bottom:0; left:50%; transform:translateX(-50%); z-index:1;">ı</span>
                     </span>
 
-                    <!-- ── "TH" ── -->
-                    <span class="inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none tracking-tight">TH</span>
+                    <!-- ══════ "TH" — bold white geometric ══════ -->
+                    <span class="inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none tracking-tight" style="letter-spacing:-0.02em;">TH</span>
 
-                    <!-- ── "O" with 3D ribbon + orbiting satellites ── -->
-                    <span class="relative inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none">
-                        O
-                        <!-- Inner 3D-like blue ribbon shadow -->
-                        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- ══════ "O" — 3D folded ribbon with orbital rings ══════ -->
+                    <span class="logo-O-wrapper font-bold text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none">
+                        <!-- The O itself as SVG for full 3D control -->
+                        <svg viewBox="0 0 180 210" width="0.85em" height="1em" xmlns="http://www.w3.org/2000/svg" style="display:block; overflow:visible;">
                             <defs>
-                                <linearGradient id="ribbonGrad" x1="20%" y1="0%" x2="80%" y2="100%">
-                                    <stop offset="0%" stop-color="#0284c7" stop-opacity="0.9"/>
-                                    <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.7"/>
-                                    <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.5"/>
+                                <linearGradient id="oRibbonOuterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="30%" stop-color="#e2e8f0"/>
+                                    <stop offset="100%" stop-color="#cbd5e1"/>
                                 </linearGradient>
+                                <linearGradient id="oRibbonInnerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0c4a6e"/>
+                                    <stop offset="30%" stop-color="#0369a1"/>
+                                    <stop offset="60%" stop-color="#0284c7"/>
+                                    <stop offset="100%" stop-color="#38bdf8"/>
+                                </linearGradient>
+                                <linearGradient id="oHighlight" x1="50%" y1="0%" x2="50%" y2="100%">
+                                    <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.4"/>
+                                    <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>
+                                </linearGradient>
+                                <radialGradient id="oGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="rgba(56,189,248,0.15)"/>
+                                    <stop offset="100%" stop-color="rgba(56,189,248,0)"/>
+                                </radialGradient>
                             </defs>
-                            <!-- 3D ribbon crescent inside the O -->
-                            <path d="M35 30 C30 45, 28 70, 38 90 C42 96, 48 98, 50 95 C42 80, 40 55, 45 35 C46 32, 40 28, 35 30Z"
-                                  fill="url(#ribbonGrad)" opacity="0.6"/>
-                            <path d="M60 28 C65 42, 68 68, 58 88 C55 93, 50 95, 48 92 C56 78, 58 52, 54 33 C53 30, 57 26, 60 28Z"
-                                  fill="url(#ribbonGrad)" opacity="0.35"/>
+
+                            <!-- Ambient glow -->
+                            <circle cx="90" cy="110" r="85" fill="url(#oGlow)"/>
+
+                            <!-- Outer face of the ribbon O — white/light -->
+                            <path d="M90 18 C140 18, 172 55, 172 110 C172 165, 140 202, 90 202 C40 202, 8 165, 8 110 C8 55, 40 18, 90 18Z
+                                     M90 55 C120 55, 140 75, 140 110 C140 145, 120 165, 90 165 C60 165, 40 145, 40 110 C40 75, 60 55, 90 55Z"
+                                  fill="url(#oRibbonOuterGrad)" fill-rule="evenodd"/>
+
+                            <!-- Inner face (the folded blue/cyan ribbon) — left crescent -->
+                            <path d="M90 18 C45 18, 8 55, 8 110 C8 145, 22 172, 48 190
+                                     L60 165 C45 150, 40 132, 40 110 C40 75, 60 55, 90 55
+                                     L90 18Z"
+                                  fill="url(#oRibbonInnerGrad)" opacity="0.85"/>
+
+                            <!-- Inner face — right crescent (deeper fold) -->
+                            <path d="M90 202 C135 202, 172 165, 172 110 C172 80, 160 55, 138 38
+                                     L130 55 C145 68, 155 85, 155 110 C155 145, 135 165, 100 165
+                                     L90 202Z"
+                                  fill="url(#oRibbonInnerGrad)" opacity="0.55"/>
+
+                            <!-- Top fold edge highlight -->
+                            <path d="M90 18 L90 55 C70 55, 52 68, 45 85 L30 50 C42 30, 64 18, 90 18Z"
+                                  fill="url(#oHighlight)" opacity="0.6"/>
+
+                            <!-- Bottom fold edge -->
+                            <path d="M90 202 L90 165 C115 165, 135 148, 142 128 L158 162 C148 182, 122 202, 90 202Z"
+                                  fill="url(#oHighlight)" opacity="0.35"/>
                         </svg>
 
-                        <!-- Orbiting satellites ring -->
-                        <span class="absolute pointer-events-none" style="top:50%;left:50%;transform:translate(-50%,-50%);width:140%;height:140%;">
-                            <svg viewBox="0 0 140 140" class="w-full h-full logo-orbit-container" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Orbit ring path -->
-                                <circle cx="70" cy="70" r="62" fill="none" stroke="rgba(56,189,248,0.2)" stroke-width="0.8" stroke-dasharray="4 6"/>
-                                <!-- Satellite dot 1 (top) -->
-                                <circle cx="70" cy="8" r="4.5" fill="#38bdf8">
-                                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+                        <!-- Orbital ring 1 — tilted, dashed -->
+                        <span class="logo-orbit-ring logo-orbit-ring-1" style="transform-origin:center;">
+                            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+                                <ellipse cx="100" cy="100" rx="92" ry="54" fill="none" stroke="rgba(56,189,248,0.18)" stroke-width="0.8" stroke-dasharray="5 7" transform="rotate(-25 100 100)"/>
+                                <!-- Orbiting dot 1 -->
+                                <circle cx="192" cy="100" r="5" fill="#38bdf8" style="animation: dotPulse 2s ease-in-out infinite;" transform="rotate(-25 100 100)">
                                 </circle>
-                                <!-- Satellite dot 2 (bottom-right offset) -->
-                                <circle cx="125" cy="85" r="3" fill="#0ea5e9">
-                                    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.5s" repeatCount="indefinite"/>
+                                <!-- Orbiting dot 2 -->
+                                <circle cx="8" cy="100" r="3.5" fill="#0ea5e9" style="animation: dotPulse2 2.5s ease-in-out infinite 0.8s;" transform="rotate(-25 100 100)">
                                 </circle>
-                                <!-- Small accent dot -->
-                                <circle cx="20" cy="110" r="2" fill="#7dd3fc" opacity="0.6">
-                                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+                            </svg>
+                        </span>
+
+                        <!-- Orbital ring 2 — second tilt -->
+                        <span class="logo-orbit-ring logo-orbit-ring-2" style="transform-origin:center;">
+                            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+                                <ellipse cx="100" cy="100" rx="85" ry="40" fill="none" stroke="rgba(125,211,252,0.12)" stroke-width="0.6" stroke-dasharray="3 8" transform="rotate(40 100 100)"/>
+                                <!-- Orbiting dot 3 (smaller, accent) -->
+                                <circle cx="185" cy="100" r="2.5" fill="#7dd3fc" opacity="0.7" transform="rotate(40 100 100)">
+                                    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite"/>
                                 </circle>
                             </svg>
                         </span>
                     </span>
 
-                    <!-- ── "N" ── -->
-                    <span class="inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none tracking-tight">N</span>
+                    <!-- ══════ "N" — bold white geometric ══════ -->
+                    <span class="inline-block font-bold text-white text-[4.5rem] sm:text-[6rem] md:text-[7.5rem] leading-none tracking-tight" style="letter-spacing:-0.01em;">N</span>
 
-                    <!-- ── Glowing Divider "|" ── -->
-                    <span class="inline-block logo-divider animate-pulse-dot font-light text-[3.5rem] sm:text-[5rem] md:text-[6rem] leading-none mx-3 sm:mx-4 md:mx-5 select-none" aria-hidden="true"
-                          style="opacity:0.9;">|</span>
+                    <!-- ══════ Glowing Divider "|" ══════ -->
+                    <span class="inline-block logo-divider-v2 font-light text-[3.5rem] sm:text-[5rem] md:text-[6rem] leading-none mx-3 sm:mx-4 md:mx-5 select-none" aria-hidden="true">|</span>
 
-                    <!-- ── "2.0" ── -->
-                    <span class="inline-block font-bold text-white text-[4rem] sm:text-[5.5rem] md:text-[7rem] leading-none tracking-tight">2.0</span>
+                    <!-- ══════ "2.0" with glowing dot inside zero counter ══════ -->
+                    <span class="logo-2-0-wrap font-bold text-white text-[4rem] sm:text-[5.5rem] md:text-[7rem] leading-none tracking-tight">
+                        2.
+                        <span style="position:relative; display:inline-block;">
+                            0
+                            <!-- Glowing cyan dot inside the "0" counter -->
+                            <span class="logo-zero-dot" style="top:50%; left:50%; transform:translate(-50%, -50%);"></span>
+                        </span>
+                    </span>
 
                 </div>
             </div>
