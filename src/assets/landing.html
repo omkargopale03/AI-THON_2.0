@@ -273,10 +273,10 @@
                     Presents</span>
             </div>
 
-            <h1
+            <h1 id="hero-title"
                 class="hero-init font-heading text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-glow hero-text-element">
-                BUILD THE FUTURE WITH <br> <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-sky-400 to-cyan-300">INTELLIGENCE</span>
+                <span class="hero-word">BUILD</span> <span class="hero-word">THE</span> <span class="hero-word">FUTURE</span> <span class="hero-word">WITH</span> <br>
+                <span class="hero-word text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-sky-400 to-cyan-300">INTELLIGENCE</span>
             </h1>
 
             <p
@@ -329,7 +329,7 @@
             <div class="text-center mb-16 gs-reveal">
                 <p class="font-heading text-sky-400/70 text-xs tracking-[0.3em] uppercase mb-3 font-semibold">// Backers
                     //</p>
-                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4 anim-heading" data-anim="letters-spread">
                     MEET OUR <span class="text-sky-400 text-glow">SPONSORS</span>
                 </h2>
                 <p class="text-gray-500 max-w-md mx-auto text-sm">Powered by industry leaders pushing the boundaries of
@@ -381,7 +381,7 @@
             <div class="text-center mb-16 gs-reveal">
                 <p class="font-heading text-sky-400/70 text-xs tracking-[0.3em] uppercase mb-3 font-semibold">// The
                     Challenges //</p>
-                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4 anim-heading" data-anim="clip-reveal">
                     PROBLEM <span class="text-sky-400 text-glow">STATEMENTS</span>
                 </h2>
                 <p class="text-gray-500 max-w-md mx-auto text-sm">Choose your domain, explore the challenges, and build
@@ -469,7 +469,7 @@
             <div class="text-center mb-24 gs-reveal">
                 <p class="font-heading text-sky-400/70 text-xs tracking-[0.3em] uppercase mb-3 font-semibold">// The
                     Journey //</p>
-                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4 anim-heading" data-anim="scale-blur">
                     PATH TO <span class="text-sky-400 text-glow">VICTORY</span>
                 </h2>
             </div>
@@ -621,7 +621,7 @@
             <div class="text-center mb-12 gs-reveal">
                 <p class="font-heading text-sky-400/70 text-xs tracking-[0.3em] uppercase mb-3 font-semibold">// Results
                     //</p>
-                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4 anim-heading" data-anim="typewriter">
                     SHORTLISTED <span class="text-sky-400 text-glow">TEAMS</span>
                 </h2>
                 <p class="text-gray-400 max-w-lg mx-auto text-sm">Congratulations to the teams advancing to the offline
@@ -704,9 +704,9 @@
         </div>
 
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center gs-reveal">
-            <h2 class="font-heading text-5xl md:text-7xl font-bold mb-6 text-white tracking-tight">
-                GRAND <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 text-glow">FINALE</span>
+            <h2 class="font-heading text-5xl md:text-7xl font-bold mb-6 text-white tracking-tight anim-heading" data-anim="split-entrance">
+                <span class="split-left inline-block">GRAND </span><span
+                    class="split-right inline-block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 text-glow">FINALE</span>
             </h2>
 
             <p class="text-gray-400 text-base md:text-lg mb-14 max-w-2xl mx-auto">The ultimate showdown. 48 hours of
@@ -1140,6 +1140,158 @@
                             }
                         }
                     );
+                });
+            }
+
+            // ── 4b. UNIQUE HEADING ANIMATIONS ──
+            if (!prefersReducedMotion) {
+
+                // Hero: word-by-word stagger with slight rotation
+                const heroWords = document.querySelectorAll('.hero-word');
+                if (heroWords.length) {
+                    gsap.set(heroWords, { opacity: 0, y: 30, rotateX: -40, transformPerspective: 600 });
+                    gsap.to(heroWords, {
+                        opacity: 1, y: 0, rotateX: 0,
+                        duration: 0.7,
+                        stagger: 0.12,
+                        ease: "back.out(1.4)",
+                        delay: 1.2 // after hero entry sequence
+                    });
+                }
+
+                // Process each unique heading animation
+                document.querySelectorAll('.anim-heading').forEach(heading => {
+                    const animType = heading.dataset.anim;
+
+                    switch (animType) {
+
+                        // SPONSORS: Letters gather from spread positions
+                        case 'letters-spread': {
+                            const text = heading.innerHTML;
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = text;
+                            let charHTML = '';
+                            const wrapChars = (node) => {
+                                if (node.nodeType === 3) {
+                                    node.textContent.split('').forEach(ch => {
+                                        if (ch === ' ') charHTML += ' ';
+                                        else charHTML += `<span class="anim-char" style="display:inline-block">${ch}</span>`;
+                                    });
+                                } else {
+                                    const tag = node.cloneNode(false);
+                                    let inner = '';
+                                    node.childNodes.forEach(child => {
+                                        if (child.nodeType === 3) {
+                                            child.textContent.split('').forEach(ch => {
+                                                if (ch === ' ') inner += ' ';
+                                                else inner += `<span class="anim-char" style="display:inline-block">${ch}</span>`;
+                                            });
+                                        } else {
+                                            inner += child.outerHTML;
+                                        }
+                                    });
+                                    tag.innerHTML = inner;
+                                    charHTML += tag.outerHTML;
+                                }
+                            };
+                            tempDiv.childNodes.forEach(wrapChars);
+                            heading.innerHTML = charHTML;
+                            const chars = heading.querySelectorAll('.anim-char');
+                            gsap.set(chars, { opacity: 0, x: () => (Math.random() - 0.5) * 60, y: () => (Math.random() - 0.5) * 30 });
+                            ScrollTrigger.create({
+                                trigger: heading,
+                                start: 'top 80%',
+                                onEnter: () => gsap.to(chars, {
+                                    opacity: 1, x: 0, y: 0,
+                                    duration: 0.5,
+                                    stagger: 0.02,
+                                    ease: "back.out(1.7)"
+                                })
+                            });
+                            break;
+                        }
+
+                        // PROBLEMS: Clip-reveal like a scanner line
+                        case 'clip-reveal': {
+                            gsap.set(heading, {
+                                clipPath: 'inset(0 100% 0 0)',
+                                opacity: 1
+                            });
+                            ScrollTrigger.create({
+                                trigger: heading,
+                                start: 'top 80%',
+                                onEnter: () => gsap.to(heading, {
+                                    clipPath: 'inset(0 0% 0 0)',
+                                    duration: 1,
+                                    ease: "power3.inOut"
+                                })
+                            });
+                            break;
+                        }
+
+                        // TIMELINE: Scale from tiny + blur clearing
+                        case 'scale-blur': {
+                            gsap.set(heading, { scale: 0.3, opacity: 0, filter: 'blur(12px)' });
+                            ScrollTrigger.create({
+                                trigger: heading,
+                                start: 'top 80%',
+                                onEnter: () => gsap.to(heading, {
+                                    scale: 1, opacity: 1, filter: 'blur(0px)',
+                                    duration: 0.9,
+                                    ease: "expo.out"
+                                })
+                            });
+                            break;
+                        }
+
+                        // SHORTLIST: Typewriter character reveal
+                        case 'typewriter': {
+                            const fullText = heading.textContent;
+                            const glowSpan = heading.querySelector('.text-glow');
+                            const glowText = glowSpan ? glowSpan.textContent : '';
+                            const plainText = fullText.replace(glowText, '').trim();
+                            heading.innerHTML = `<span class="tw-plain"></span> <span class="text-sky-400 text-glow tw-glow"></span>`;
+                            const twPlain = heading.querySelector('.tw-plain');
+                            const twGlow = heading.querySelector('.tw-glow');
+                            ScrollTrigger.create({
+                                trigger: heading,
+                                start: 'top 80%',
+                                onEnter: () => {
+                                    let i = 0;
+                                    const interval = setInterval(() => {
+                                        if (i < plainText.length) {
+                                            twPlain.textContent += plainText[i];
+                                        } else if (i - plainText.length < glowText.length) {
+                                            twGlow.textContent += glowText[i - plainText.length];
+                                        } else {
+                                            clearInterval(interval);
+                                        }
+                                        i++;
+                                    }, 55);
+                                }
+                            });
+                            break;
+                        }
+
+                        // GRAND FINALE: Split entrance from sides
+                        case 'split-entrance': {
+                            const left = heading.querySelector('.split-left');
+                            const right = heading.querySelector('.split-right');
+                            if (left && right) {
+                                gsap.set(left, { x: -80, opacity: 0 });
+                                gsap.set(right, { x: 80, opacity: 0 });
+                                ScrollTrigger.create({
+                                    trigger: heading,
+                                    start: 'top 80%',
+                                    onEnter: () => {
+                                        gsap.to(left, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+                                        gsap.to(right, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.15 });
+                                    }
+                                });
+                            }
+                            break;
+                        }
+                    }
                 });
             }
 
